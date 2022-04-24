@@ -11,8 +11,9 @@ pipeline:
         - sh "git --version"  
     - stage: "Downloading repo and starting app"
       steps:
+        - git branch "main"
         - git "https://github.com/Makii117/black-steel-api.git"
-    - stage: "Installing dependencies"
+        - stage: "Installing dependencies"
       steps:
         - sh "npm install"
         - sh "npm install -g mocha" 
