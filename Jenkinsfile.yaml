@@ -5,18 +5,19 @@ pipeline:
     - stage: "Log Jenkins Node and Git versions"
       steps:
         - sh "node -v"
-        - sh "git --version"
-    - stage: "Installing dependencies"
-      steps:
-        - sh "npm install"
-        - sh "npm install -g mocha"   
+        - sh "git --version"  
     - stage: "Downloading repo and starting app"
       steps:
         - git "https://github.com/Makii117/black-steel-api.git"
-        - sh "npm run start"
+    - stage: "Installing dependencies"
+      steps:
+        - sh "npm install"
+        - sh "npm install -g mocha" 
+        
     - stage: "Running tests"
       steps:
+        - sh "npm run start"
         - sh "npm test"
-    - stage: "Pipeline done"
-      steps: 
-        -sh "echo 'Done'"
+    - stage: "Final Jenkins YAML Pipeline Stage"
+      steps:
+        - sh "echo 'Jenkins YAML Pipeline Complete'"
