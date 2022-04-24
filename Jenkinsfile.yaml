@@ -7,7 +7,7 @@ pipeline:
         - sh "node -v"
         - sh "git --version"
     - stage: "Installing dependencies"
-        steps:
+      steps:
         - sh "npm install"
         - sh "npm install -g mocha"   
     - stage: "Downloading repo and starting app"
