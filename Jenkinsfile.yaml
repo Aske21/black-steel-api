@@ -1,0 +1,20 @@
+pipeline:
+  agent:
+    any:
+  stages:
+    - stage: "Log Jenkins Node and Git versions"
+      steps:
+        - sh "node -v"
+        - sh "git --version"
+    - stage: "Installing dependencies"
+        steps:
+        - sh "npm install"
+        - sh "npm install -g mocha"   
+    - stage: "Downloading repo and starting app"
+      steps:
+        - git "https://github.com/Makii117/black-steel-api.git"
+        - sh "npm run start"
+    - stage: "Running tests"
+      steps:
+        - sh "mocha test"
+    - stage: "Pipeline done"
