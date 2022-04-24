@@ -11,7 +11,7 @@ pipeline:
         - sh "git --version"  
     - stage: "Downloading repo"
       steps:
-        - git branch "main"
+        - branch "main"
         - git "https://github.com/Makii117/black-steel-api.git"
     - stage: "Installing dependencies"
       steps:
