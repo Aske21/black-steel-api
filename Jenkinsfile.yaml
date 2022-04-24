@@ -2,7 +2,7 @@ pipeline:
   agent:
    any:
   tools:
-    nodejs: "node"
+    nodejs: "NodeJS"
   stages:
     - stage: "Log Jenkins Node and Git versions"
       steps:
