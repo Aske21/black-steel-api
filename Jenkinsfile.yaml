@@ -3,6 +3,7 @@ pipeline:
    any:
   tools:
     nodejs: "NodeJS"
+  branch: "main"
   stages:
     - stage: "Log Jenkins Node and Git versions"
       steps:
