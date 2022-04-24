@@ -16,5 +16,5 @@ pipeline:
         - sh "npm run start"
     - stage: "Running tests"
       steps:
-        - sh "mocha test"
+        - sh "npm test"
     - stage: "Pipeline done"
