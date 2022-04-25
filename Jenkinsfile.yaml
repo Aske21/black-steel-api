@@ -9,13 +9,11 @@ pipeline:
   stages:
     - stage: "Log Jenkins Node and Git versions"
       steps:
-        - sh "node -v"
-        - sh "git --version"  
+        - sh "node -v" 
     - stage: "Building"
       steps:
         - sh "npm install"
         - sh "npm install -g mocha" 
-        
     - stage: "Running tests"
       steps:
         - sh "npm test"
