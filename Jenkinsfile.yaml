@@ -13,7 +13,7 @@ pipeline:
     - stage: "Building"
       steps:
         - sh "npm install"
-        - sh "npm install -g mocha" 
+        - sh "npm install mocha" 
     - stage: "Running tests"
       steps:
         - sh "npm test"
