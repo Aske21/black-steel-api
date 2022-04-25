@@ -13,6 +13,11 @@ pipeline:
     - stage: "Building"
       steps:
         - sh "npm install"
+        - sh "set -x 
+npm start &
+sleep 1
+echo $! > .pidfile
+set +x"
     - stage: "Running tests"
       steps:
         - sh "npm test"
