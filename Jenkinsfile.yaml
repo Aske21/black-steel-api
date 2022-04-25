@@ -1,6 +1,9 @@
 pipeline:
   agent:
-   any:
+    docker:
+      image: 'node:lts-bullseye-slim'
+      label: 'nodeInDocker' 
+      args: '-p 3000:3000'
   tools:
     nodejs: "NodeJS"
   branch: "main"
@@ -9,15 +12,15 @@ pipeline:
       steps:
         - sh "node -v"
         - sh "git --version"  
-    - stage: "Installing dependencies"
+    - stage: "Building"
       steps:
         - sh "npm install"
         - sh "npm install -g mocha" 
         
     - stage: "Running tests"
       steps:
-        - sh "npm run start"
         - sh "npm test"
-    - stage: "Final Jenkins YAML Pipeline Stage"
+    - stage: "Deliver"
       steps:
-        - sh "echo 'Jenkins YAML Pipeline Complete'"
+        - sh './jenkins/scripts/deliver.sh'
+        - sh './jenkins/scripts/kill.sh'
