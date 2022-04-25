@@ -9,9 +9,6 @@ pipeline:
       steps:
         - sh "node -v"
         - sh "git --version"  
-    - stage: "Downloading repo"
-      steps:
-        - git "https://github.com/Makii117/black-steel-api.git"
     - stage: "Installing dependencies"
       steps:
         - sh "npm install"
