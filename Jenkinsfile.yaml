@@ -10,7 +10,7 @@ pipeline:
     - stage: "Log Jenkins Node and Git versions"
       steps:
         - sh "node -v" 
-        - sh 'sudo chown -R 115:200 "./npm"'
+
     - stage: "Building"
       steps:
         - sh "npm -g config set user root"
