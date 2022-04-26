@@ -12,7 +12,9 @@ pipeline:
         - sh "node -v" 
     - stage: "Building"
       steps:
+        - sh "npm -g config set user root"
         - sh "npm install"
+        - sh "npm install -g mocha"
         - sh "npm start & sleep 1"
     - stage: "Running tests"
       steps:
