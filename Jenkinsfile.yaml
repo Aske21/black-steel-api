@@ -17,11 +17,7 @@ pipeline:
         - sh "npm install"
         - sh "npm install -g mocha"
         - sh "npm start & sleep 1"
-        - sh "echo \$! > .pidfile"
     - stage: "Running tests"
       steps:
         - sh "npm test"
-    - stage: "Deliver"
-      steps:
-        - sh 'set -x'
-        - sh 'kill $(cat .pidfile)'
+
