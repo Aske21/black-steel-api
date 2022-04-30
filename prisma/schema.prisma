@@ -23,6 +23,16 @@ cart Cart[]
 order Order[]
 }
 
+model UserAdrress {
+  id Int @id @default(autoincrement())
+  user_id Int
+  address_line String
+  city String
+  postal_code String
+  country String
+  phone_number String
+
+}
 
 model Product{
 id Int @id @default(autoincrement())
@@ -59,8 +69,6 @@ updatedAt DateTime?
 user User @relation(fields: [customer_id],references: [id])
 
 }
-
-
 
 enum Role{
 USER
