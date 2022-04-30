@@ -11,19 +11,21 @@ url = env("DATABASE_URL")
 }
 
 model User {
-id Int @id @default(autoincrement())
-createdAt DateTime @default(now())
-//modifiedAt DateTime
-email String @unique
-name String
-surname String
-address String
-role Role @default(USER)
-cart Cart[]
-order Order[]
+  @@map("user")
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  //modifiedAt DateTime
+  email String @unique
+  name String
+  surname String
+  address String
+  role Role @default(USER)
+  cart Cart[]
+  order Order[]
 }
 
 model UserAddress {
+  @@map("user_address")
   id Int @id @default(autoincrement())
   user_id Int
   address_line String
@@ -35,24 +37,27 @@ model UserAddress {
 }
 
 model Product{
-id Int @id @default(autoincrement())
-product_id Int @unique
-name String
-price Float
-brand String
-description String
-no_in_stock Int
-img String
-date_added DateTime @default(now())
+  @@map("product")
+  id Int @id @default(autoincrement())
+  product_id Int @unique
+  name String
+  price Float
+  brand String
+  description String
+  no_in_stock Int
+  img String
+  date_added DateTime @default(now())
 }
 
-model product_inventory{
-id Int @id @default(autoincrement())
-quantity Int
-created_at DateTime @default(now())
+model ProductInventory{
+  @@map("product_inventory")
+  id Int @id @default(autoincrement())
+  quantity Int
+  created_at DateTime @default(now())
 }
 
-model product_category{
+model ProductCategory{
+  @@map("product_category")
   id Int @id @default(autoincrement())
   name String
   desc String
@@ -60,20 +65,22 @@ model product_category{
 }
 
 model Cart {
-id Int @id @default(autoincrement())
-customer_id Int @unique
-product_id Int
-user User @relation(fields: [customer_id],references: [id])
-quantity Int
-totalPrice Float
+  @@map("cart")
+  id Int @id @default(autoincrement())
+  customer_id Int @unique
+  product_id Int
+  user User @relation(fields: [customer_id],references: [id])
+  quantity Int
+  totalPrice Float
 
 }
 model Order{
-id Int @id @default(autoincrement())
-customer_id Int @unique
-createdAt DateTime @default(now())
-updatedAt DateTime?
-user User @relation(fields: [customer_id],references: [id])
+  @@map("order")
+  id Int @id @default(autoincrement())
+  customer_id Int @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime?
+  user User @relation(fields: [customer_id],references: [id])
 
 }
 
