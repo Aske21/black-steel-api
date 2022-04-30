@@ -23,11 +23,11 @@ cart Cart[]
 order Order[]
 }
 
-model UserAdrress {
+model UserAddress {
   id Int @id @default(autoincrement())
   user_id Int
   address_line String
-  city String
+  city String 
   postal_code String
   country String
   phone_number String
@@ -51,6 +51,7 @@ id Int @id @default(autoincrement())
 quantity Int
 created_at DateTime @default(now())
 }
+
 model product_category{
   id Int @id @default(autoincrement())
   name String
