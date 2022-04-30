@@ -51,6 +51,12 @@ id Int @id @default(autoincrement())
 quantity Int
 created_at DateTime @default(now())
 }
+model product_category{
+  id Int @id @default(autoincrement())
+  name String
+  desc String
+  created_at DateTime @default(now())
+}
 
 model Cart {
 id Int @id @default(autoincrement())
