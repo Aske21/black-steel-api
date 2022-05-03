@@ -47,6 +47,9 @@ model Product{
   no_in_stock Int
   img String
   date_added DateTime @default(now())
+
+  order_items order_items @relation(fields:[id],references: [id])
+
 }
 
 model ProductInventory{
@@ -67,26 +70,53 @@ model ProductCategory{
 model Cart {
   @@map("cart")
   id Int @id @default(autoincrement())
-  customer_id Int @unique
+  user_id Int @unique
   product_id Int
-  user User @relation(fields: [customer_id],references: [id])
+  user User @relation(fields: [user_id],references: [id])
   quantity Int
   totalPrice Float
 
 }
+
 model Order{
-  @@map("order")
+  @@map("order_details")
   id Int @id @default(autoincrement())
-  customer_id Int @unique
+  user_id Int @unique
+  total Decimal
+  payment_id Int
   createdAt DateTime @default(now())
   updatedAt DateTime?
-  user User @relation(fields: [customer_id],references: [id])
+
+  //Foreign keys and constraints
+  user User @relation(fields: [user_id],references: [id])
+  payment payment_details @relation(fields:[payment_id],references: [id])
+  order_item order_items[]
+
+}
+
+model order_items {
+  id Int @id @default(autoincrement())
+  order_id Int
+  product_id Product?
+  quantity Int
+  createdAt DateTime @default(now())
+
+  //Fks and constraints
+  order_details Order @relation(fields:[order_id],references: [id])
+  
 
 }
 
 model payment_details{
   id Int @id @default(autoincrement())
+  order_id Order?
+  amount Int
+  provider String
+  status String
+  createdAt DateTime @default(now())
 }
+
+
 
 
 enum Role{
