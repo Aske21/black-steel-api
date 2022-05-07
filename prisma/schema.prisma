@@ -2,124 +2,139 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-provider = "postgresql"
-url = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-  @@map("user")
-  id Int @id @default(autoincrement())
-  createdAt DateTime @default(now())
+  id           Int              @id @default(autoincrement())
+  createdAt    DateTime         @default(now())
   //modifiedAt DateTime
-  email String @unique
-  name String
-  surname String
-  address String
-  role Role @default(USER)
-  cart Cart[]
-  order Order[]
+  email        String           @unique
+  name         String
+  surname      String
+  address      String
+  role         Role             @default(USER)
+  cart         ShoppingSession?
+  OrderDetails OrderDetails     @relation(fields: [id], references: [user_id])
+  UserAddress UserAddress?
+  @@map("user")
 }
 
 model UserAddress {
-  @@map("user_address")
-  id Int @id @default(autoincrement())
-  user_id Int
+  id           Int    @id @default(autoincrement())
+  user_id      Int
   address_line String
-  city String 
-  postal_code String
-  country String
+  city         String
+  postal_code  String
+  country      String
   phone_number String
+  user User @relation(fields: [user_id], references:[id])
 
+  @@map("user_address")
 }
 
-model Product{
-  @@map("product")
+model Product {
   id Int @id @default(autoincrement())
-  product_id Int @unique
-  name String
-  price Float
-  brand String
+
+  name        String
   description String
+  price       Float
+  brand       String
+
+  categories ProductCategory[]
+
   no_in_stock Int
-  img String
-  date_added DateTime @default(now())
+  img         String
+  date_added  DateTime @default(now())
 
-  order_items order_items @relation(fields:[id],references: [id])
+  order_item OrderItems? @relation(fields: [id], references: [product_id])
+  CartItem   CartItem?
 
+  @@map("product")
 }
 
-model ProductInventory{
-  @@map("product_inventory")
-  id Int @id @default(autoincrement())
-  quantity Int
-  created_at DateTime @default(now())
-}
+model ProductCategory {
+  id          Int      @id @default(autoincrement())
+  category_id Int
+  name        String
+  desc        String
+  created_at  DateTime @default(now())
+  Product     Product  @relation(fields: [category_id], references: [id])
 
-model ProductCategory{
   @@map("product_category")
-  id Int @id @default(autoincrement())
-  name String
-  desc String
-  created_at DateTime @default(now())
 }
 
-model Cart {
+model ShoppingSession {
+  id         Int        @id @default(autoincrement())
+  user_id    Int        @unique
+  totalPrice Decimal
+  createdAt  DateTime   @default(now())
+  modifiedAt DateTime
+  user       User       @relation(fields: [user_id], references: [id])
+  CartItem   CartItem[]
+
   @@map("cart")
-  id Int @id @default(autoincrement())
-  user_id Int @unique
-  product_id Int
-  user User @relation(fields: [user_id],references: [id])
-  quantity Int
-  totalPrice Float
-
 }
 
-model Order{
-  @@map("order_details")
-  id Int @id @default(autoincrement())
-  user_id Int @unique
-  total Decimal
-  payment_id Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime?
+model CartItem {
+  id              Int             @id @default(autoincrement())
+  session_id      Int             @unique
+  product_id      Int             @unique
+  quantity        Int
+  createdAt       DateTime        @default(now())
+  ShoppingSession ShoppingSession @relation(fields: [session_id], references: [id])
+  Product         Product         @relation(fields: [product_id], references: [id])
+
+  @@map("cart_item")
+}
+
+model OrderDetails {
+  id         Int       @id @default(autoincrement())
+  user_id    Int       @unique
+  total      Decimal
+  payment_id Int       @unique
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime?
 
   //Foreign keys and constraints
-  user User @relation(fields: [user_id],references: [id])
-  payment payment_details @relation(fields:[payment_id],references: [id])
-  order_item order_items[]
-
+  OrderItems     OrderItems[]
+  PaymentDetails PaymentDetails?
+  User           User?
+  @@map("order_details")
 }
 
-model order_items {
-  id Int @id @default(autoincrement())
-  order_id Int
-  product_id Product?
-  quantity Int
+model OrderItems {
+  id         Int @id @default(autoincrement())
+  order_id   Int
+  product_id Int @unique
+
+  quantity  Int
   createdAt DateTime @default(now())
 
   //Fks and constraints
-  order_details Order @relation(fields:[order_id],references: [id])
-  
+  product       Product?
+  order_details OrderDetails @relation(fields: [order_id], references: [id])
 
+  @@map("order_items")
 }
 
-model payment_details{
-  id Int @id @default(autoincrement())
-  order_id Order?
-  amount Int
-  provider String
-  status String
-  createdAt DateTime @default(now())
+model PaymentDetails {
+  id           Int          @id @default(autoincrement())
+  amount       Int
+  provider     String
+  status       String
+  createdAt    DateTime     @default(now())
+  modifiedAt   DateTime
+  OrderDetails OrderDetails @relation(fields: [id], references: [payment_id])
+  @@map("payment_details")
 }
 
-
-
-
-enum Role{
-USER
-ADMIN
+enum Role {
+  USER
+  ADMIN
 }
