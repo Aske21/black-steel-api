@@ -1,5 +1,8 @@
-var supertest = require("supertest");
-var should = require("should");
+
+import supertest from "supertest";
+import should from "should";
+
+
 
 var server = supertest.agent("http://localhost:5000");
 

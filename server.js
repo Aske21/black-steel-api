@@ -20,6 +20,11 @@ app.get("/users", async (req, res) => {
 
 });
 
+app.get("/", function (req, res) {
+  res.send("Hello");
+  res.status(200);
+});
+
 app.get("/hello", function (req, res) {
   res.send("hi");
   res.status(200);
