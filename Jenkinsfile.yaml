@@ -1,4 +1,6 @@
 pipeline:
+  steps:
+    - sh "echo 'DATABASE_URL=${env.DATABASE_URL} > .env' "
   agent:
     docker:
       image: 'node:lts-bullseye-slim'
@@ -16,7 +18,6 @@ pipeline:
         - sh "npm -g config set user root"
         - sh "npm install"
         - sh "npm install -g mocha"
-        - sh "echo 'DATABASE_URL=${env.DATABASE_URL} > .env' "
         - sh "npm start & sleep 1"
     - stage: "Running tests"
       steps:
