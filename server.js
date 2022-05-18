@@ -21,12 +21,12 @@ app.get("/users", async (req, res) => {
 });
 
 app.get("/", function (req, res) {
-  res.send("Hello");
+  res.send('<h1>Hello</h1> <a href="hello">Api endpoint example</a>');
   res.status(200);
 });
 
 app.get("/hello", function (req, res) {
-  res.send("hi");
+  res.send("hi from different endpoint");
   res.status(200);
 });
 
