@@ -21,7 +21,7 @@ app.get("/users", async (req, res) => {
 });
 
 app.get("/", function (req, res) {
-  res.send('<h1>Hello</h1> <a href="hello">Api endpoint example</a>');
+  res.send('Hello, go to besirevic.dev/hello to check out another endpoint');
   res.status(200);
 });
 
