@@ -3,7 +3,8 @@ pipeline:
     docker:
       image: 'node:lts-bullseye-slim'
       args: '-p 3000:3000 -u root --privileged'
-  environment : "DATABASE_URL=${env.DATABASE_URL}"
+  environment: 
+    DATABASE_URL="${env.DATABASE_URL}"
   tools:
     nodejs: "NodeJS"
   branch: "main"
