@@ -30,6 +30,11 @@ app.get("/hello", function (req, res) {
   res.status(200);
 });
 
+app.get("/test",function (req, res){
+  res.send("This is a test for an endpoint");
+  res.status(200);
+})
+
 app.use((req, res, next) => {
   res.status(404);
   return res.json({
