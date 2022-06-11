@@ -28,14 +28,19 @@ app.get("/user", async (req, res) => {
 
 
 app.get("/", function (req, res) {
-  res.send("Hello");
+  res.send('Hello, go to besirevic.dev/hello to check out another endpoint');
   res.status(200);
 });
 
 app.get("/hello", function (req, res) {
-  res.send("hi");
+  res.send("hi from different endpoint");
   res.status(200);
 });
+
+app.get("/test",function (req, res){
+  res.send("This is a test for an endpoint");
+  res.status(200);
+})
 
 app.use((req, res, next) => {
   res.status(404);
