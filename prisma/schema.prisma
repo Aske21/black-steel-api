@@ -45,26 +45,41 @@ model Product {
   description String
   price       Float
   brand       String
-
-  categories ProductCategory[]
+  category_id Int?
+  categories ProductCategory? @relation(fields: [category_id],references: [id])
 
   no_in_stock Int
   img         String
   date_added  DateTime @default(now())
 
-  order_item OrderItems? @relation(fields: [id], references: [product_id])
+  order_item OrderItems?
   CartItem   CartItem?
 
   @@map("product")
 }
+model OrderItems {
+  id         Int @id @default(autoincrement())
+  order_id   Int
+  product_id Int @unique
+
+  quantity  Int
+  createdAt DateTime @default(now())
+
+  //Fks and constraints
+  product Product @relation(fields: [product_id],references: [id])
+  order_details OrderDetails @relation(fields: [order_id], references: [id])
+
+  @@map("order_items")
+}
+
 
 model ProductCategory {
   id          Int      @id @default(autoincrement())
-  category_id Int
+
   name        String
   desc        String
   created_at  DateTime @default(now())
-  Product     Product  @relation(fields: [category_id], references: [id])
+  Product     Product[]
 
   @@map("product_category")
 }
@@ -108,20 +123,6 @@ model OrderDetails {
   @@map("order_details")
 }
 
-model OrderItems {
-  id         Int @id @default(autoincrement())
-  order_id   Int
-  product_id Int @unique
-
-  quantity  Int
-  createdAt DateTime @default(now())
-
-  //Fks and constraints
-  product       Product?
-  order_details OrderDetails @relation(fields: [order_id], references: [id])
-
-  @@map("order_items")
-}
 
 model PaymentDetails {
   id           Int          @id @default(autoincrement())

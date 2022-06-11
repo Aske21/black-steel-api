@@ -1,16 +1,21 @@
-import Prisma from '@prisma/client';
 import express from 'express';
-const { PrismaClient } = Prisma;
+import prisma from "./config/client.js";
 
-
-
-const prisma = new PrismaClient()
 
 const app = express();
 
 app.use(express.json())
 
-app.get("/users", async (req, res) => {
+//Import routes
+import usersRouter from './routes/user.routes.js';
+import productRouter from './routes/product.routes.js';
+
+//Route handling
+app.use("/api",usersRouter);
+app.use("/api",productRouter)
+
+
+app.get("/user", async (req, res) => {
   const users = await prisma.user.findMany()
   res.json({
     success: true,
@@ -19,6 +24,8 @@ app.get("/users", async (req, res) => {
   })
 
 });
+
+
 
 app.get("/", function (req, res) {
   res.send("Hello");
