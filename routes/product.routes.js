@@ -1,6 +1,6 @@
 import express from "express";
 import prisma from '../config/client.js'
-//TODO: IMPLEMENT CONTROLLERS
+//TODO: IMPLEMENT CONTROLLERS; ADD MANY TO MANY RELATIONSHIP FOR PRODUCT AND CATEGORY WITH EXPLICIT RELATION
 var router=express.Router()
 
 //get all products route
