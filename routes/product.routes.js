@@ -23,7 +23,8 @@ router.get('/products/:id',async(req,res,next)=>{
         const product = await prisma.product.findUnique({
             where:{
                 id:Number(id)
-            }
+            },
+            include:{categories:true}
         })
         res.json(product)
     } catch (error) {
@@ -32,6 +33,24 @@ router.get('/products/:id',async(req,res,next)=>{
 
     
 })
+//get products by category id
+router.get('/products/category/:cid',async(req,res,next)=>{
+
+    try {
+        //ADD PARAM VALIDATION
+        const {cid}=req.params
+        const product = await prisma.product.findMany({
+            where:{
+                category_id:Number(cid)
+            },
+            include:{categories:true}
+        })
+        res.json(product)
+    } catch (error) {
+        next(error)
+    }
+})
+//TODO: ADD AUTHENTICATION AND ADMIN ONLY PERMISSIONS
 
 //add product
 router.post('/products',async(req,res,next)=>{
@@ -57,10 +76,38 @@ router.post('/products',async(req,res,next)=>{
 })
 //update product
 router.patch('/products/:id',async(req,res,next)=>{
-    res.send({message:'Update product'});
+    try {
+        //ADD PARAM VALIDATION
+        const {id}=req.params
+        const product = await prisma.product.update({
+            where:{
+                id:Number(id)
+            },
+            data:req.body,
+            include:{categories:true}
+        })
+        res.json(product)
+    } catch (error) {
+        next(error)
+    }
 })
+
 //delete product
 router.delete('/products/:id',async(req,res,next)=>{
-    res.send({message:'Delete single product'});
+    
+    try {
+        //ADD PARAM VALIDATION
+        const {id}=req.params
+        const deletedProduct = await prisma.product.delete({
+            where:{
+                id:Number(id)
+            }
+        })
+        res.json(product)
+    } catch (error) {
+        next(error)
+    }
+
+
 })
 export default router;

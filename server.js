@@ -26,7 +26,6 @@ app.get("/user", async (req, res) => {
 });
 
 
-
 app.get("/", function (req, res) {
   res.send('Hello, go to besirevic.dev/hello to check out another endpoint');
   res.status(200);
