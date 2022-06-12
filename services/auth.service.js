@@ -7,9 +7,9 @@ class AuthService {
 
 
     static async register(data) {
-          const { email } = data;
+
           data.password = bcrypt.hashSync(data.password, 8);
-            try{
+          try{
           const user = await prisma.user.create({
               data
           })
@@ -17,7 +17,8 @@ class AuthService {
           
           return data;
         }catch(e){
-          throw createError.NotAcceptable("User alreay exists")
+          console.log(e)
+          
         }
         }
 

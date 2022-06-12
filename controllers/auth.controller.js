@@ -10,7 +10,7 @@ class authController {
             })
         }
         catch (e) {
-            next(createError(e.message))
+            next(createError.NotAcceptable(e.message))
         }
     }
     static login = async (req, res, next) => {
