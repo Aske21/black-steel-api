@@ -6,6 +6,7 @@ const app = express();
 
 app.use(express.json())
 app.use(cors())
+
 //Import routes
 import usersRouter from './routes/user.routes.js';
 import productRouter from './routes/product.routes.js';
