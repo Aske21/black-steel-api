@@ -7,6 +7,8 @@ router.get('/cart', auth, cart.getCart);
 
 router.patch('/cart', auth, cart.addToCart);
 
-//router.post('/cart-delete-item', isAuth, shopController.postCartDeleteProduct);
+router.delete('/cart',auth,cart.removeFromCart)
+
+router.post('/cart',auth,cart.updateCart)
 
 export default router;

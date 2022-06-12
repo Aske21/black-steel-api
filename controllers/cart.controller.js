@@ -2,6 +2,7 @@ import auth from '../middleware/auth.js'
 import prisma from '../config/client.js'
 import express from 'express'
 
+
 class cartController{
  static getCart = async (req,res,next)=>{
     const user = req.user
@@ -31,11 +32,12 @@ class cartController{
             }
         })
         console.log(product.price)
+        const calculatedPrice= product.price*req.body.quantity;
         const cart = await prisma.shoppingSession.update({
             where:{
                 user_id:Number(user.payload.id)
             },data:{
-                totalPrice:{increment:product.price},
+                totalPrice:{increment:calculatedPrice},
                 CartItem:{
                     create:[
                         {
@@ -55,11 +57,56 @@ class cartController{
      }
  }
  static removeFromCart = async (req,res,next)=>{
+    const user= req.user
+    
+    try {
+        const removedItem = await prisma.shoppingSession.update({
+            where:{
+                user_id:Number(user.payload.id)
+            },data:{
+                CartItem:{
+                    delete:[
+                        {
+                            id:req.body.id
+                        }
+                    ]
+                }
+            }
+            
+        })
 
+        res.json(removedItem)
+        
+    } catch (e) {
+        console.log(e)
+        next(e)
+    }
  }
+
+
  static updateCart = async (req,res,next)=>{
-     
- }
+try {
+    const user= req.user
+    const updateCart = await prisma.shoppingSession.update({
+        where:{
+            user_id:Number(user.payload.id)
+        },
+        data:{CartItem:{
+            update:{
+                where:{id:req.body.product_id},
+                data:{quantity:req.body.quantity}
+                
+            }
+            }
+        }
+    })
+    res.json(updateCart)
+} catch (e) {
+    console.log(e)
+    next(e)
+} 
+
+}
 
 }
 export default cartController;
