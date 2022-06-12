@@ -9,11 +9,11 @@ app.use(express.json())
 //Import routes
 import usersRouter from './routes/user.routes.js';
 import productRouter from './routes/product.routes.js';
-
+import auth from './routes/auth.routes.js';
 //Route handling
 app.use("/api",usersRouter);
 app.use("/api",productRouter)
-
+app.use('/auth',auth)
 
 app.get("/user", async (req, res) => {
   const users = await prisma.user.findMany()
@@ -52,4 +52,5 @@ app.use((req, res, next) => {
 
 
 //listen on port 5000
+console.log("app is up")
 app.listen(5000);

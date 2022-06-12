@@ -13,30 +13,19 @@ datasource db {
 model User {
   id           Int              @id @default(autoincrement())
   createdAt    DateTime         @default(now())
-  //modifiedAt DateTime
   email        String           @unique
+
   name         String
   surname      String
-  address      String
+  password     String
+  address      String?
   role         Role             @default(USER)
   cart         ShoppingSession?
-  OrderDetails OrderDetails     @relation(fields: [id], references: [user_id])
-  UserAddress UserAddress?
+  OrderDetails OrderDetails[]
+
   @@map("user")
 }
 
-model UserAddress {
-  id           Int    @id @default(autoincrement())
-  user_id      Int
-  address_line String
-  city         String
-  postal_code  String
-  country      String
-  phone_number String
-  user User @relation(fields: [user_id], references:[id])
-
-  @@map("user_address")
-}
 
 model Product {
   id Int @id @default(autoincrement())
@@ -71,7 +60,6 @@ model OrderItems {
 
   @@map("order_items")
 }
-
 
 model ProductCategory {
   id          Int      @id @default(autoincrement())
@@ -112,26 +100,29 @@ model OrderDetails {
   id         Int       @id @default(autoincrement())
   user_id    Int       @unique
   total      Decimal
-  payment_id Int       @unique
   createdAt  DateTime  @default(now())
   updatedAt  DateTime?
-
+  payment_confirmed Boolean @default(false)
   //Foreign keys and constraints
   OrderItems     OrderItems[]
-  PaymentDetails PaymentDetails?
-  User           User?
+
+  payment_id PaymentDetails?
+  user User @relation(fields: [user_id],references: [id])
   @@map("order_details")
 }
 
 
 model PaymentDetails {
   id           Int          @id @default(autoincrement())
+  order_id     Int
   amount       Int
   provider     String
   status       String
   createdAt    DateTime     @default(now())
   modifiedAt   DateTime
-  OrderDetails OrderDetails @relation(fields: [id], references: [payment_id])
+
+  OrderDetails OrderDetails @relation(fields: [order_id],references: [id])
+
   @@map("payment_details")
 }
 
