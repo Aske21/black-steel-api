@@ -10,7 +10,9 @@ class authController {
             })
         }
         catch (e) {
-            next(createError.NotAcceptable(e.message))
+            res.status(500).json({
+                message:e.message
+            })
         }
     }
     static login = async (req, res, next) => {
@@ -22,7 +24,10 @@ class authController {
                 data
             })
         } catch (e) {
-            next(createError(e.message))
+            res.status(500).json({
+                message:"Invalid password"
+            })
+            
         }
     }
     static all = async (req, res, next) => {
