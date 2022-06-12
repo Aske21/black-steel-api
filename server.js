@@ -10,10 +10,12 @@ app.use(cors())
 import usersRouter from './routes/user.routes.js';
 import productRouter from './routes/product.routes.js';
 import auth from './routes/auth.routes.js';
+import cart from './routes/cart.routes.js'
 //Route handling
 app.use("/api",usersRouter);
 app.use("/api",productRouter)
 app.use('/auth',auth)
+app.use('/api',cart)
 
 app.get("/user", async (req, res) => {
   const users = await prisma.user.findMany()
