@@ -91,15 +91,18 @@ try {
         where:{
             user_id:Number(user.payload.id)
         },
-        data:{CartItem:{
-            update:{
-                where:{id:req.body.product_id},
+        data:{
+            CartItem:{
+            updateMany:{
+                where:{id:req.body.id,
+                     product_id:req.body.product_id},
                 data:{quantity:req.body.quantity}
                 
             }
             }
         }
     })
+
     res.json(updateCart)
 } catch (e) {
     console.log(e)

@@ -8,7 +8,5 @@ router.post('/', user.register);
 // login
 router.post('/login', user.login);
 
-//for adding JWT safeguard for logged in users router.get('/', auth, user.all);
-
 
 export default router;
