@@ -7,8 +7,7 @@ class authController {
             const user = await auth.register(req.body);
 
             res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-            res.header("Access-Control-Allow-Origin","https://black-steel.herokuapp.com/login");
-            res.header("Access-Control-Allow-Origin","https://besirevic.dev/auth");
+            res.header("Access-Control-Allow-Origin","https://black-steel.herokuapp.com");
             res.header("Access-Control-Allow-Credentials","true");
             
             
@@ -32,8 +31,7 @@ class authController {
          try {
             const data = await auth.login(req.body)
             res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-            res.header("Access-Control-Allow-Origin","https://black-steel.herokuapp.com/login");
-            res.header("Access-Control-Allow-Origin","https://besirevic.dev/auth/login");
+            res.header("Access-Control-Allow-Origin","https://black-steel.herokuapp.com");
             res.header("Access-Control-Allow-Credentials","true");
             
             

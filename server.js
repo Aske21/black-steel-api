@@ -7,7 +7,8 @@ const app = express();
 
 app.use(express.json())
 app.use(cors({
-  origin:"https://black-steel.heroku.app",
+  origin:"https://black-steel.heroku.app/login",
+  origin:"https://black-steel.herokuapp.com",
   credentials:true
 }))
 app.use(cookieParser())
