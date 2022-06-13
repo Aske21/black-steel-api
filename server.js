@@ -1,12 +1,16 @@
 import express from 'express';
 import prisma from "./config/client.js";
 import cors from 'cors'
+import cookieParser from 'cookie-parser';
 
 const app = express();
 
 app.use(express.json())
-app.use(cors())
-
+app.use(cors({
+  origin:"http://localhost:3000",
+  credentials:true
+}))
+app.use(cookieParser())
 //Import routes
 import usersRouter from './routes/user.routes.js';
 import productRouter from './routes/product.routes.js';

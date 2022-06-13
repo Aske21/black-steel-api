@@ -18,7 +18,7 @@ class AuthService {
           return data;
         }catch(e){
           console.log(e)
-          throw {status:500,message:"User already exists"}
+          throw new createError.Unauthorized("User already exists")
           
         }
         }
@@ -31,13 +31,15 @@ class AuthService {
             }
         });
         if (!user) {
-            throw {status:500,message:"User not found"}
+              
+          throw new createError.NotFound("User not found") 
             
         }
         const checkPassword = bcrypt.compareSync(password, user.password)
-        if (!checkPassword) throw {status:500, message:"Invalid password"};
+        if (!checkPassword) throw new createError.Unauthorized("Invalid password");
         delete user.password
         const accessToken = await jwt.signAccessToken(user)
+        
         return { ...user, accessToken }
     }
     static async all() {

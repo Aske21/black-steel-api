@@ -1,12 +1,24 @@
 import auth from '../services/auth.service.js';
 import createError from 'http-errors';
+
 class authController {
     static register = async (req, res, next) => {
         try {
             const user = await auth.register(req.body);
 
-            res.json({
-                data: user
+            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+            res.header("Access-Control-Allow-Origin","http://localhost:3000/auth");
+            res.header("Access-Control-Allow-Credentials","true");
+            
+            
+            res.header('Authorization','Bearer= '+ user.accessToken,{HttpOnly:true, Path:'/'})
+            
+            res.cookie("Bearer",user.accessToken)
+             console.log(res.cookie)
+            res.status(200).json({
+                status: true,
+                message: "Account succsessfully registered",
+                user
             })
         }
         catch (e) {
@@ -18,14 +30,25 @@ class authController {
     static login = async (req, res, next) => {
          try {
             const data = await auth.login(req.body)
+            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+            res.header("Access-Control-Allow-Origin","http://localhost:3000");
+            res.header("Access-Control-Allow-Credentials","true");
+            
+            
+            res.header('Authorization','Bearer= '+ data.accessToken,{HttpOnly:true, Path:'/'})
+            
+            res.cookie("Bearer",data.accessToken)
+             console.log(res.cookie)
             res.status(200).json({
                 status: true,
                 message: "Account login successful",
                 data
             })
+            
         } catch (e) {
+            
             res.status(500).json({
-                message:"Invalid password"
+                message:e.message
             })
             
         }
