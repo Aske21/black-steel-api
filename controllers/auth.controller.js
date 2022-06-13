@@ -11,9 +11,9 @@ class authController {
             res.header("Access-Control-Allow-Credentials","true");
             
             
-            res.header('Authorization','Bearer= '+ user.accessToken,{HttpOnly:true, Path:'/'})
+            res.header('Authorization','Bearer= '+ user.accessToken,{HttpOnly:true, Path:'/', sameSite: 'none', secure: true})
             
-            res.cookie("Bearer",user.accessToken)
+            res.cookie("Bearer",user.accessToken,{ sameSite: 'none', secure: true })
              console.log(res.cookie)
             res.status(200).json({
                 status: true,
@@ -35,9 +35,9 @@ class authController {
             res.header("Access-Control-Allow-Credentials","true");
             
             
-            res.header('Authorization','Bearer= '+ data.accessToken,{HttpOnly:true, Path:'/'})
+            res.header('Authorization','Bearer= '+ data.accessToken,{HttpOnly:true, Path:'/', sameSite: 'none', secure: true})
             
-            res.cookie("Bearer",data.accessToken)
+            res.cookie("Bearer",data.accessToken,{ sameSite: 'none', secure: true })
              console.log(res.cookie)
             res.status(200).json({
                 status: true,
