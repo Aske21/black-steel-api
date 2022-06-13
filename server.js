@@ -8,9 +8,10 @@ const app = express();
 app.use(express.json())
 app.use(cors({
   origin:"https://black-steel.heroku.app/login",
-  origin:"https://black-steel.herokuapp.com",
+  origin:"http://localhost:3000",
   credentials:true
 }))
+app.set('trust proxy', 1);
 app.use(cookieParser())
 //Import routes
 import usersRouter from './routes/user.routes.js';
