@@ -9,7 +9,7 @@ class AuthService {
     static async register(data) {
           const { email } = data;
           data.password = bcrypt.hashSync(data.password, 8);
-            try{
+          try{
           const user = await prisma.user.create({
               data
           })
@@ -17,7 +17,9 @@ class AuthService {
           
           return data;
         }catch(e){
-          throw createError.NotAcceptable("User alreay exists")
+          console.log(e)
+          throw new createError.Unauthorized("User already exists")
+          
         }
         }
 
@@ -29,12 +31,15 @@ class AuthService {
             }
         });
         if (!user) {
-            throw createError.NotFound('User not registered')
+              
+          throw new createError.NotFound("User not found") 
+            
         }
         const checkPassword = bcrypt.compareSync(password, user.password)
-        if (!checkPassword) throw createError.Unauthorized('Email address or password not valid')
+        if (!checkPassword) throw new createError.Unauthorized("Invalid password");
         delete user.password
         const accessToken = await jwt.signAccessToken(user)
+        
         return { ...user, accessToken }
     }
     static async all() {

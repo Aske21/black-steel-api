@@ -1,11 +1,18 @@
 import express from 'express';
 import prisma from "./config/client.js";
-
+import cors from 'cors'
+import cookieParser from 'cookie-parser';
 
 const app = express();
 
 app.use(express.json())
-
+app.use(cors({
+  origin:"https://black-steel.heroku.app/login",
+  origin:"http://localhost:3000",
+  credentials:true
+}))
+app.set('trust proxy', 1);
+app.use(cookieParser())
 //Import routes
 import usersRouter from './routes/user.routes.js';
 import productRouter from './routes/product.routes.js';

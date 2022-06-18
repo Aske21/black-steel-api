@@ -75,7 +75,7 @@ model ProductCategory {
 model ShoppingSession {
   id         Int        @id @default(autoincrement())
   user_id    Int        @unique
-  totalPrice Decimal
+  totalPrice Decimal    @default(0)
   createdAt  DateTime   @default(now())
   modifiedAt DateTime
   user       User       @relation(fields: [user_id], references: [id])
