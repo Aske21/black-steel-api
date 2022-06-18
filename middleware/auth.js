@@ -5,8 +5,6 @@ import cookieParser from 'cookie-parser';
 const auth = async (req, res, next) => {
 
     var cookies = cookieParser();    
-    console.log(req.cookies)
-
     if (!req.cookies) {
         return next(createError.Unauthorized('Access token is required'))
     }

@@ -9,6 +9,8 @@ app.use(express.json())
 app.use(cors({
   origin:"https://black-steel.heroku.app/login",
   origin:"http://localhost:3000",
+
+  
   credentials:true
 }))
 app.set('trust proxy', 1);
@@ -18,11 +20,16 @@ import usersRouter from './routes/user.routes.js';
 import productRouter from './routes/product.routes.js';
 import auth from './routes/auth.routes.js';
 import cart from './routes/cart.routes.js'
+import orders from './routes/order.routes.js';
+
 //Route handling
+
 app.use("/api",usersRouter);
 app.use("/api",productRouter)
 app.use('/auth',auth)
 app.use('/api',cart)
+app.use('/api',orders)
+
 
 app.get("/user", async (req, res) => {
   const users = await prisma.user.findMany()

@@ -9,7 +9,7 @@ class cartController{
     try{
 
         const cart = await prisma.shoppingSession.findMany({
-            where:{user_id:user.id},
+            where:{user_id:user.payload.id},
             include:{
                 CartItem:{
                 include:{Product:true}

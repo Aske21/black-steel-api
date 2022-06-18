@@ -1,10 +1,17 @@
+import express from "express";
+var router=express.Router()
+import order from '../controllers/order.controller.js';
+import auth from '../middleware/auth.js';
 
 
+router.get('/checkout', auth, order.getCheckout);
 
-router.get('/checkout', isAuth, shopController.getCheckout);
+router.get('/checkout/success', auth, order.getCheckoutSuccess);
 
-router.get('/checkout/success', shopController.getCheckoutSuccess);
+router.get('/checkout/cancel',auth, order.getCheckoutCancel);
 
-router.get('/checkout/cancel', shopController.getCheckout);
+router.get('/orders', auth, order.getOrders);
 
-router.get('/orders', isAuth, shopController.getOrders);
+router.get('/order',auth,order.makeOrder);
+
+export default router;
