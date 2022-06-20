@@ -9,7 +9,7 @@ app.use(express.json())
 app.use(cors({
   origin:"https://black-steel.heroku.app/login",
   origin:"http://localhost:3000",
-
+  origin:"https://black-steel.heroku.app",
   
   credentials:true
 }))
