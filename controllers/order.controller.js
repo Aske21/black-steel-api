@@ -28,13 +28,44 @@ static getOrders = async(req,res,next)=>{
 }
 
 //process order
-static getCheckout = async(req,res,next)=>{}
+static getCheckout = async(req,res,next)=>{
+    const user=req.user
+    
+    try {
+        let uid =user.payload.id; 
+        const order = await prisma.orderDetails.findMany({
+            where:
+            
+            {
+                AND:[{
+                    user_id:uid
+                },
+                {
+                    payment_confirmed:true
+                }]
+                }
+        })
+        
+    } catch (error) {
+        
+    }
+
+}
 
 //return order info for succssesful checkout
-static getCheckoutSuccess = async(req,res,next)=>{}
+static getCheckoutSuccess = async(req,res,next)=>{
+    const user = req.user;
+    try {
+        let uid=user.payload.id;
+
+    } catch (error) {
+        
+    }
+}
 
 //cancel order and remove from backlog
 static getCheckoutCancel = async(req,res,next)=>{}
+
 
 
 //convert cart to order and display order details

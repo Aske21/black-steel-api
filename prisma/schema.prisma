@@ -110,7 +110,16 @@ model OrderDetails {
   user User @relation(fields: [user_id],references: [id])
   @@map("order_details")
 }
-
+model OrderStatus {
+  id Int @id @default(autoincrement())
+  user_id Int
+  order_id Int
+  delivery_status String 
+  shipment_method String
+  delivery_notes String?
+  delivered Boolean
+  
+}
 
 model PaymentDetails {
   id           Int          @id @default(autoincrement())
@@ -118,6 +127,13 @@ model PaymentDetails {
   amount       Int
   provider     String
   status       String
+  currency     String
+  cc_number    String
+  cc_name      String
+  cc_exp_date DateTime
+  cc_display_number String
+  cc_company String
+  country String
   createdAt    DateTime     @default(now())
   modifiedAt   DateTime
 
