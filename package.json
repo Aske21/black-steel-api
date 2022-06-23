@@ -2,7 +2,7 @@
   "name": "black-steel-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
     "test": "mocha test",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Aske21/black-steel-api.git"
+    "url": "git+https://github.com/Makii117/black-steel-api.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Aske21/black-steel-api/issues"
+    "url": "https://github.com/Makii117/black-steel-api/issues"
   },
-  "homepage": "https://github.com/Aske21/black-steel-api#readme",
+  "homepage": "https://github.com/Makii117/black-steel-api#readme",
   "dependencies": {
     "@prisma/client": "^3.13.0",
     "bcryptjs": "^2.4.3",

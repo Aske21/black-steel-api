@@ -1,5 +1,6 @@
 import express from "express";
 import prisma from '../config/client.js'
+import auth from "../middleware/auth.js";
 //TODO: IMPLEMENT CONTROLLERS; ADD MANY TO MANY RELATIONSHIP FOR PRODUCT AND CATEGORY WITH EXPLICIT RELATION
 var router=express.Router()
 
@@ -53,7 +54,7 @@ router.get('/products/category/:cid',async(req,res,next)=>{
 //TODO: ADD AUTHENTICATION AND ADMIN ONLY PERMISSIONS
 
 //add product
-router.post('/products',async(req,res,next)=>{
+router.post('/products',auth,async(req,res,next)=>{
     try {
         const product = await prisma.product.create({
                 data:{
